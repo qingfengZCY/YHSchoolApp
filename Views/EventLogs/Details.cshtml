@@ -1,0 +1,54 @@
+﻿@model YHSchool.Models.EventLog
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>EventLog</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EnrollID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EnrollID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ActionType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ActionType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LogLevel)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LogLevel)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Creator)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Creator)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

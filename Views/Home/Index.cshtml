@@ -1,0 +1,114 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section scripts
+{
+<script type="text/javascript">
+
+    function SendTestMsg()
+    {
+        var msg = $('#txtMsg').val();
+        
+        var resUrl = "../api/YH/postYH"
+
+        $.ajax({
+            url: resUrl,
+            type: "post",
+            contentType: "application/json",
+            dataType: "text",
+            data: msg,
+            success: function (data) {
+                console.log("数据：" + data);
+            }
+        });
+    }
+
+    function GetEnrollMsg() {
+
+        var resUrl = "../api/YH"
+        $.ajax({
+            url: resUrl,
+            type: 'get',
+            contentType: "application/json",
+            success: function (data) {
+                IntialEnroll(data);
+               // console.log(data);
+            }
+        });
+    }
+
+    function IntialEnroll(res)
+    {
+        var enrollDiv = $('#divEnroll');
+        enrollDiv.html('');
+        enrollDiv.append("<table class='table' cellpadding=1 cellspacing=1 ><thead><tr><td>Form Code</td><td>Form Name</td><td>消息</td><td>源数据</td></tr</thead><tbody>")
+        
+            for (var i = 0; i < res.length; i++) {
+                newRow = "<tr><td>" + res[i].formCode + "</td><td>" + res[i].message + "</td><td>" + res[i].originMsg + "</td></tr>";
+                enrollDiv.append(newRow);
+            }
+        enrollDiv.append("</tbody></table>")
+     }
+
+</script>
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h2 style="color:#ff6a00; margin:20px;"> 欢迎来到扬航机器人 </h2>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label style="color:#ff6a00; margin:20px;"> 测试消息 </label>
+            <textarea cols="100" rows="10" id="txtMsg" class="form-control"></textarea>
+        </div>
+
+        <div class="form-group">
+            <input type="button" value="发送消息" class="btn btn-default" onclick="SendTestMsg();" />
+        </div>
+
+        <div class="form-group">
+            <input type="button" value="获取报名消息" class="btn btn-default" onclick="GetEnrollMsg();" />
+            <div id="divEnroll"></div>
+        </div>
+    </div>
+    @*<div class="col-md-3">
+        <h2>Application uses</h2>
+        <ul>
+            <li>Sample pages using ASP.NET Core MVC</li>
+            <li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
+        </ul>
+    </div>
+    <div class="col-md-3">
+        <h2>How to</h2>
+        <ul>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
+        </ul>
+    </div>
+    <div class="col-md-3">
+        <h2>Overview</h2>
+        <ul>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
+        </ul>
+    </div>
+    <div class="col-md-3">
+        <h2>Run &amp; Deploy</h2>
+        <ul>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
+        </ul>
+    </div>*@
+</div>

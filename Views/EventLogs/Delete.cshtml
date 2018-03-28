@@ -1,0 +1,57 @@
+﻿@model YHSchool.Models.EventLog
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>EventLog</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EnrollID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EnrollID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ActionType)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ActionType)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LogLevel)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LogLevel)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Creator)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Creator)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

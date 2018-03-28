@@ -1,0 +1,53 @@
+﻿@model YHSchool.Models.YHForm
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>YHForm</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FormCode" class="control-label"></label>
+                <input asp-for="FormCode" class="form-control" />
+                <span asp-validation-for="FormCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FormName" class="control-label"></label>
+                <input asp-for="FormName" class="form-control" />
+                <span asp-validation-for="FormName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MsgTemplate" class="control-label"></label>
+                <input asp-for="MsgTemplate" class="form-control" />
+                <span asp-validation-for="MsgTemplate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreateDate" class="control-label"></label>
+                <input asp-for="CreateDate" class="form-control" />
+                <span asp-validation-for="CreateDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Creator" class="control-label"></label>
+                <input asp-for="Creator" class="form-control" />
+                <span asp-validation-for="Creator" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
