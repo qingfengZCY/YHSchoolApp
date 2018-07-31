@@ -1,0 +1,45 @@
+﻿@model IEnumerable<YHSchool.Models.Sysconfig>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h3>系统配置  <a asp-action="Create" class="btn-sm btn-default btn-success ">新增</a></h3>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ConfigKey)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConfigValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comments)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConfigKey)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConfigValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comments)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

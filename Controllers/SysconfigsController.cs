@@ -2,54 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SGS.CRS.UI.Utility;
+using Microsoft.Extensions.Caching.Memory;
+using YHSchool.Core;
 using YHSchool.Data;
 using YHSchool.Models;
 
 namespace YHSchool.Controllers
 {
-    public class EnrollsController : Controller
+    [Authorize]
+    public class SysconfigsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EnrollsController(ApplicationDbContext context)
+        private IMemoryCache _cache;
+
+        public SysconfigsController(ApplicationDbContext context, IMemoryCache memoryCache)
         {
             _context = context;
+            _cache = memoryCache;
         }
 
-        // GET: Enrolls
-        public async Task<IActionResult> Index(EnrollsParam param)
+        // GET: Sysconfigs
+        public async Task<IActionResult> Index()
         {
-            //return View(await _context.Enrolls.ToListAsync());
-
-            ViewBag.SearchFilters = param.SearchFilters;
-            var list = string.IsNullOrWhiteSpace(param.SearchFilters) ?
-                 await _context.Enrolls.OrderByDescending(x => x.CreateDate).AsNoTracking().ToListAsync() :
-                await _context.Enrolls.Where(x => x.Message.Contains(param.SearchFilters)).OrderByDescending(x => x.CreateDate).AsNoTracking().ToListAsync();
-
-            //paginate
-            var list_page = list.Skip(param.Skip).Take(param.PageSize);
-
-            //total count
-            var data_count = list.Count;
-
-            param.RequetUrl = Request.QueryString.Value;
-            var res = new PagerResult<Enroll>
-            {
-                Code = 0,
-                DataList = list_page,
-                Total = data_count,
-                PageSize = param.PageSize,
-                PageIndex = param.PageIndex,
-                RequestUrl = param.RequetUrl
-            };
-            return View(res);
+            return View(await _context.Sysconfigs.ToListAsync());
         }
 
-        // GET: Enrolls/Details/5
+        // GET: Sysconfigs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -57,39 +40,40 @@ namespace YHSchool.Controllers
                 return NotFound();
             }
 
-            var enroll = await _context.Enrolls
+            var sysconfig = await _context.Sysconfigs
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (enroll == null)
+            if (sysconfig == null)
             {
                 return NotFound();
             }
 
-            return View(enroll);
+            return View(sysconfig);
         }
 
-        // GET: Enrolls/Create
+        // GET: Sysconfigs/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Enrolls/Create
+        // POST: Sysconfigs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,FormCode,Message,OriginMsg,HasSend,CreateDate,Creator")] Enroll enroll)
+        public async Task<IActionResult> Create([Bind("ID,ConfigKey,ConfigValue,Comments")] Sysconfig sysconfig)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(enroll);
+                sysconfig.SysType = 1; // Default is WebHook
+                _context.Add(sysconfig);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(enroll);
+            return View(sysconfig);
         }
 
-        // GET: Enrolls/Edit/5
+        // GET: Sysconfigs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -97,22 +81,22 @@ namespace YHSchool.Controllers
                 return NotFound();
             }
 
-            var enroll = await _context.Enrolls.SingleOrDefaultAsync(m => m.ID == id);
-            if (enroll == null)
+            var sysconfig = await _context.Sysconfigs.SingleOrDefaultAsync(m => m.ID == id);
+            if (sysconfig == null)
             {
                 return NotFound();
             }
-            return View(enroll);
+            return View(sysconfig);
         }
 
-        // POST: Enrolls/Edit/5
+        // POST: Sysconfigs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,FormCode,Message,OriginMsg,HasSend,CreateDate,Creator")] Enroll enroll)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,ConfigKey,ConfigValue,Comments")] Sysconfig sysconfig)
         {
-            if (id != enroll.ID)
+            if (id != sysconfig.ID)
             {
                 return NotFound();
             }
@@ -121,12 +105,14 @@ namespace YHSchool.Controllers
             {
                 try
                 {
-                    _context.Update(enroll);
+                    sysconfig.SysType = 1;
+                    _context.Update(sysconfig);
                     await _context.SaveChangesAsync();
+                    _cache.Remove(ConstraintStr.CON_DDHookKey);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EnrollExists(enroll.ID))
+                    if (!SysconfigExists(sysconfig.ID))
                     {
                         return NotFound();
                     }
@@ -137,10 +123,10 @@ namespace YHSchool.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(enroll);
+            return View(sysconfig);
         }
 
-        // GET: Enrolls/Delete/5
+        // GET: Sysconfigs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -148,30 +134,31 @@ namespace YHSchool.Controllers
                 return NotFound();
             }
 
-            var enroll = await _context.Enrolls
+            var sysconfig = await _context.Sysconfigs
                 .SingleOrDefaultAsync(m => m.ID == id);
-            if (enroll == null)
+            if (sysconfig == null)
             {
                 return NotFound();
             }
 
-            return View(enroll);
+            return View(sysconfig);
         }
 
-        // POST: Enrolls/Delete/5
+        // POST: Sysconfigs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var enroll = await _context.Enrolls.SingleOrDefaultAsync(m => m.ID == id);
-            _context.Enrolls.Remove(enroll);
+            var sysconfig = await _context.Sysconfigs.SingleOrDefaultAsync(m => m.ID == id);
+            _context.Sysconfigs.Remove(sysconfig);
             await _context.SaveChangesAsync();
+            _cache.Remove(ConstraintStr.CON_DDHookKey);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EnrollExists(int id)
+        private bool SysconfigExists(int id)
         {
-            return _context.Enrolls.Any(e => e.ID == id);
+            return _context.Sysconfigs.Any(e => e.ID == id);
         }
     }
 }

@@ -28,6 +28,22 @@ namespace YHSchool.Models
 
         public String Creator { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Modify Date")]
+        public DateTime ModifyDate { get; set; }
+
+        public String Modifier { get; set; }
+
         public List<Enroll> Enrolls { get; set; }
+
+        /// <summary>
+        /// 机器人应用WebHook ID
+        /// </summary>
+        [Required]
+        public int HookID { get; set; }
+
+        [Display(Name = "钉钉Web Hook")]
+        public Sysconfig Hook { get; set; }
     }
 }

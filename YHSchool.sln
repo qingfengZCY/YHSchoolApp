@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YHSchool", "YHSchool.csproj", "{3D0B25F2-05A9-47A4-97BE-F06AF9742B2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SGS.CRS.UI.Utility", "..\SGS.CRS.UI.Utility\SGS.CRS.UI.Utility.csproj", "{BB59BE6D-B832-4961-BAD8-ADCA1DDEEEC9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3D0B25F2-05A9-47A4-97BE-F06AF9742B2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D0B25F2-05A9-47A4-97BE-F06AF9742B2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D0B25F2-05A9-47A4-97BE-F06AF9742B2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB59BE6D-B832-4961-BAD8-ADCA1DDEEEC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB59BE6D-B832-4961-BAD8-ADCA1DDEEEC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB59BE6D-B832-4961-BAD8-ADCA1DDEEEC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB59BE6D-B832-4961-BAD8-ADCA1DDEEEC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -208,7 +208,10 @@ namespace YHSchool.Controllers
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
+            ViewData["IsLogin"] = "";
             ViewData["ReturnUrl"] = returnUrl;
+            if (string.IsNullOrEmpty(User.Identity.Name))
+                ViewData["IsLogin"] = "none";            
             return View();
         }
 

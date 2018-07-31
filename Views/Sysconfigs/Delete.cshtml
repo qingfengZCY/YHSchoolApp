@@ -1,0 +1,39 @@
+﻿@model YHSchool.Models.Sysconfig
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Sysconfig</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ConfigKey)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ConfigKey)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ConfigValue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ConfigValue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Delete" onclick="return confirm('你确认要删除 此系统配置吗？')" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

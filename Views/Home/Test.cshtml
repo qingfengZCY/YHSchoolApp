@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section scripts
+    {
+    <script type="text/javascript">
+
+        function GetQRCode() {
+            var msg = $('#txtCode').val();
+
+            if (msg.length < 3) { 
+                alert('please input url for QRCode');
+                return false;
+            }
+            var resUrl = "../api/QR/qrcode_A?url=" + msg;
+
+            $.ajax({
+                url: resUrl,
+                type: "post",
+                contentType: "application/json",
+                dataType: "text",
+                data: msg,
+                success: function (res) {
+                    console.log(res);
+                    
+                }
+            });
+        }
+
+        function SendTestMsg() {
+            var msg = $('#txtMsg').val();
+
+            var resUrl = "../api/YH/postYH"
+
+            $.ajax({
+                url: resUrl,
+                type: "post",
+                contentType: "application/json",
+                dataType: "text",
+                data: msg,
+                success: function (res) {
+                    GetEnrollMsg();
+                    console.log(res);
+                    debugger;
+                    alert("发送成功。调用DD机器人状态：" + res);
+                }
+            });
+        }
+
+        function GetEnrollMsg() {
+
+            var resUrl = "../api/YH"
+            $.ajax({
+                url: resUrl,
+                type: 'get',
+                contentType: "application/json",
+                success: function (data) {
+                    IntialEnroll(data);
+                    // console.log(data);
+                }
+            });
+        }
+
+        function IntialEnroll(res) {
+            var enrollDiv = $('#divEnroll');
+            enrollDiv.html('');
+            enrollDiv.append("<table class='table' cellpadding=1 cellspacing=1 ><thead><tr><td>Form Code</td><td>Form Name</td><td>消息</td></tr</thead><tbody>")
+
+            for (var i = 0; i < res.length; i++) {
+                newRow = "<tr><td>" + res[i].formCode + "</td><td>" + res[i].message + "</td><td>" + "</td></tr>";
+                enrollDiv.append(newRow);
+            }
+            enrollDiv.append("</tbody></table>")
+        }
+
+    </script>
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h2 style="color:#ff6a00; margin:20px;"> 消息测试页 （当向钉钉消息发送失败时，可以在这里调整信息内容重发） </h2>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="form-group">
+            <label style="color:#ff6a00; margin:20px;"> 测试消息 </label>
+            <textarea cols="100" rows="10" id="txtMsg" class="form-control"> {'form': 'TtBpz8', 'form_name': '扬航机器人试听课预约', 'entry': { 'serial_number': 128, 'field_1': '李寻欢', 'field_14': '男', 'field_7': 15, 'field_2': '18123803564'}}
+        </textarea>
+        </div>
+
+        <div class="form-group">
+            <input type="button" value="发送消息" class="btn btn-default" onclick="SendTestMsg();" />
+        </div>
+
+        <div class="form-group">
+            @*<input type="button" value="获取报名消息" class="btn btn-default" onclick="GetEnrollMsg();" />*@
+            <div id="divEnroll"></div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label style="color:#ff6a00; margin:20px;"> 二维码 API Demo </label>
+            <input type="text" id="txtCode" class="form-control" value="http://localhost:5000/api/QR/qrcode_A?url=https://jinshuju.net/f/TtBpz8?field_3=zmj" />
+            @*<input type="button" value="获取二维码" class="btn btn-default" onclick="GetQRCode();" />*@
+
+            @*<img src="http://qr.liantu.com/api.php?text=www.liantu.com" />*@
+        </div>
+    </div>
+</div>

@@ -33,3 +33,12 @@
         display: none;
     }
 }
+
+hr{ border-color:#ff6a00;}
+
+/* detial page header*/
+.navHeader_de {
+    border-bottom: solid 1px #ff6a00;
+    width: 200px;
+    margin: -5px 0 5px -5px;
+}

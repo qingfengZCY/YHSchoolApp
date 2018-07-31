@@ -1,0 +1,35 @@
+﻿@model YHSchool.Models.Sysconfig
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h3> <span>系统配置 </span> -- 明细</h3>
+<p class="navHeader_de" />
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ConfigKey)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ConfigKey)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ConfigValue)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ConfigValue)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Comments)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Comments)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

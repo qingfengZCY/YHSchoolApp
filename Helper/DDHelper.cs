@@ -13,14 +13,14 @@ public static class DDHelper
     //test available
     //public const string WEB_HOOK = "https://oapi.dingtalk.com/robot/send?access_token=0c3b8296f4bf564519286ab3c1fc61a189cd3ba3c25d00b60a04649500e801d3";
 
-// 机器人列表    
+    // 机器人列表    
 
-    public static string SendMsg(string msg)
+    public static string SendMsg(string msg,string webHook)
     {
         try
         {
             String textMsg = "{ \"msgtype\": \"text\", \"text\": {\"content\": \"" + msg + "\"}}"; 
-            string s = Post(WEB_HOOK, textMsg, null); 
+            string s = Post(webHook, textMsg, null); 
             return s;
         }
         catch(Exception er)

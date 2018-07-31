@@ -10,7 +10,7 @@ namespace YHSchool.Models
     [Table("Ent_Enroll")]
     public class Enroll
     {
-        public int ID { get; set; }
+        public int  ID { get; set; }
         public string FormCode { get; set; }
 
         [DataType(DataType.MultilineText)]
@@ -28,11 +28,11 @@ namespace YHSchool.Models
         [Display(Name = "Has Send")]
         public bool HasSend { get; set; }
 
-
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Display(Name = "Create Date")]
         public DateTime CreateDate { get; set; }
+
         public String Creator { get; set; }
     }
 }

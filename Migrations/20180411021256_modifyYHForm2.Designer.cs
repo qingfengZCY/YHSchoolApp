@@ -11,9 +11,10 @@ using YHSchool.Data;
 namespace YHSchool.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180411021256_modifyYHForm2")]
+    partial class modifyYHForm2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,6 +252,8 @@ namespace YHSchool.Migrations
 
                     b.Property<string>("Creator");
 
+                    b.Property<int>("DepartmentID");
+
                     b.Property<string>("FormCode")
                         .IsRequired();
 
@@ -268,7 +271,7 @@ namespace YHSchool.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("HookID");
+                    b.HasIndex("DepartmentID");
 
                     b.ToTable("Ent_YHForm");
                 });
@@ -327,9 +330,9 @@ namespace YHSchool.Migrations
 
             modelBuilder.Entity("YHSchool.Models.YHForm", b =>
                 {
-                    b.HasOne("YHSchool.Models.Sysconfig", "Hook")
+                    b.HasOne("YHSchool.Models.Sysconfig", "Department")
                         .WithMany()
-                        .HasForeignKey("HookID")
+                        .HasForeignKey("DepartmentID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

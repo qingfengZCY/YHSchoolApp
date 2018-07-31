@@ -8,5 +8,7 @@ namespace YHSchool.Core
     public class ConstraintStr
     {
         public const string CON_YHEntryName = "entry";
+
+        public const string CON_DDHookKey = "DD_RobertHook";
     }
 }

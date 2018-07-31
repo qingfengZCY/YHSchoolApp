@@ -11,9 +11,10 @@ using YHSchool.Data;
 namespace YHSchool.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180403014952_addConfig")]
+    partial class addConfig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,8 +236,6 @@ namespace YHSchool.Migrations
 
                     b.Property<string>("ConfigValue");
 
-                    b.Property<int>("SysType");
-
                     b.HasKey("ID");
 
                     b.ToTable("Ref_Sysconfig");
@@ -257,18 +256,10 @@ namespace YHSchool.Migrations
                     b.Property<string>("FormName")
                         .IsRequired();
 
-                    b.Property<int>("HookID");
-
-                    b.Property<string>("Modifier");
-
-                    b.Property<DateTime>("ModifyDate");
-
                     b.Property<string>("MsgTemplate")
                         .IsRequired();
 
                     b.HasKey("ID");
-
-                    b.HasIndex("HookID");
 
                     b.ToTable("Ent_YHForm");
                 });
@@ -323,14 +314,6 @@ namespace YHSchool.Migrations
                     b.HasOne("YHSchool.Models.YHForm")
                         .WithMany("Enrolls")
                         .HasForeignKey("YHFormID");
-                });
-
-            modelBuilder.Entity("YHSchool.Models.YHForm", b =>
-                {
-                    b.HasOne("YHSchool.Models.Sysconfig", "Hook")
-                        .WithMany()
-                        .HasForeignKey("HookID")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

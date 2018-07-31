@@ -33,9 +33,10 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="YHForms" asp-action="Index">课程</a></li>
                     <li><a asp-area="" asp-controller="Enrolls" asp-action="Index">报名消息</a></li>
-                    <li><a asp-area="" asp-controller="EventLogs" asp-action="Index">Log</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="EventLogs" asp-action="Index">日志</a></li>
+                    <li><a asp-area="" asp-controller="Sysconfigs" asp-action="Index">系统配置</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Test">Test</a></li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>
@@ -45,7 +46,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - 扬航机器人</p>
+            <p>&copy; 2018 - 扬航 消息配置平台 . 技术支持 <a href="mailto:Leftqingfeng@163.com">Jerry.Zhang </a></p>
         </footer>
     </div>
 

@@ -25,6 +25,8 @@ namespace YHSchool.Data
 
         public DbSet<EventLog> EventLogs { get; set; }
 
+        public DbSet<Sysconfig> Sysconfigs { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

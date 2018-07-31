@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using SGS.CRS.UI.Utility;
 using YHSchool.Data;
 using YHSchool.Models;
 
@@ -20,9 +21,23 @@ namespace YHSchool.Controllers
         }
 
         // GET: EventLogs
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(EventParams param)
         {
-            return View(await _context.EventLogs.ToListAsync());
+            ViewBag.SearchComments = param.Comments;
+            var list = string.IsNullOrWhiteSpace(param.Comments) ?
+                 await _context.EventLogs.OrderByDescending(x => x.CreateDate).AsNoTracking().ToListAsync():
+                await _context.EventLogs.Where(x => x.Comments.Contains(param.Comments)).OrderByDescending(x => x.CreateDate).AsNoTracking().ToListAsync();
+
+            //paginate
+            var list_page = list.Skip(param.Skip).Take(param.PageSize);
+
+            //total count
+            var data_count = list.Count;
+
+            param.RequetUrl =  Request.QueryString.Value;
+            var res = new PagerResult<EventLog> { Code=0,DataList = list_page,Total = data_count,
+                    PageSize = param.PageSize, PageIndex = param.PageIndex, RequestUrl = param.RequetUrl};
+            return View(res);
         }
 
         // GET: EventLogs/Details/5
